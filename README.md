@@ -10,7 +10,7 @@ A **generic stack implementation** in C++ using **templates**, allowing storage 
 ## 📌 Usage
 
 ```
-git clone
+git clone https://github.com/jr-cho/Stack-in-CPP.git
 
-gcc 
+g++ -std=c++20 main.cpp -o main
 ```
