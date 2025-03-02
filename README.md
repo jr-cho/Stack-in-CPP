@@ -3,7 +3,7 @@ A **generic stack implementation** in C++ using **templates**, allowing storage 
 
 ## 🚀 Features
 - Supports **any data type** (integers, floats, strings, custom objects, etc.).
-- Standard **stack operations**: `push()`, `pop()`, `peek()`, `isEmpty()`, `isFull()`.
+- Standard **stack operations**: `push()`, `pop()`, `peek()`, `isEmpty()`, `isFull()`, `print()`.
 - **Efficient memory management** using dynamic allocation.
 - Simple and **easy-to-use**.
 
