@@ -1,65 +1,103 @@
 #include <iostream>
 
 template <typename T>
-struct Stack {
-    int top, capacity;
+class Vector {
     T* arr;
+    size_t capacity_;
+public:
+    Vector() : arr(nullptr), capacity_(0) {}
 
-    Stack(int size){
-        arr = new T[size];
-        capacity = size;
-        top = -1;
-    }
-
-    ~Stack(){
+    ~Vector() {
         delete[] arr;
-        std::cout << "Stack Destroyed\n";
     }
 
-    bool isEmpty(){
-        if (top < 0){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    bool isFull(){
-        if (top >= capacity - 1){
-            return true;
-        }
-        else {
-            return false;
+    void reserve(size_t n) {
+        if(n > capacity_) {
+            delete[] arr;
+            arr = new T[n];
+            capacity_ = n;
         }
     }
 
-    void push(T data){
-        if(!isFull()){
-            arr[++top] = data;
-            std::cout << "Pushed: " << data << std::endl;
-        }
-        else{
-            std::cout << "WARNING: Stack Overflow!" << std::endl;
-        }
+    T& operator[](size_t index) {
+        return arr[index];
+    }
+    const T& operator[](size_t index) const {
+        return arr[index];
+    }
+};
+
+template <typename T>
+class Stack {
+    Vector<T> data;
+    int top;
+    int capacity;
+
+public:
+    Stack(int capacity) : capacity(capacity), top(-1) {
+        data.reserve(capacity);
     }
 
-    T pop(){
-        T temp = arr[top];
-        top--;
-        return temp;
+    bool isEmpty() const {
+        return top == -1;
     }
 
-    T peek(){
-        return arr[top];
+    bool isFull() const {
+      return top == capacity - 1;
+    }
+
+    int size() const {
+        return top + 1;
+    }
+
+    void push(const T& value) {
+        if (isFull()) {
+            std::cout << "WARNING: STACK OVERFLOW!\n";
+        }
+        data[++top] = value;
+    }
+
+    T pop() {
+        if (isEmpty()) {
+           std::cout << "WARNING: STACK OVERFLOW!\n";
+        }
+        return data[top--];
+    }
+
+    T peek() const {
+        if (isEmpty()) {
+           std::cout << "WARNING: STACK OVERFLOW!\n";
+        }
+        return data[top];
+    }
+
+    void print() const {
+        std::cout << "STACK: ";
+        for (int i = 0; i <= top; i++) {
+            std::cout << data[i] << " ";
+        }
+        std::cout << std::endl;
     }
 };
 
 int main() {
-    Stack<int> s(3);
-    s.push(10);
-    s.push(20);
-    s.push(30);
-    std::cout << "Peek: " << s.peek() << std::endl;
-    std::cout << "Pop: " << s.pop() << std::endl;
-}
+    Stack<int> myStack(5);
+
+    myStack.push(10);
+    myStack.push(20);
+    myStack.push(30);
+    myStack.push(40);
+    myStack.push(50);
+
+    myStack.print();
+
+    std::cout << "TOP ELEMENT: " << myStack.peek() << std::endl; 
+    std::cout << "STACK SIZE: " << myStack.size() << std::endl;
+
+    std::cout << "POPPED ELEMENT: " << myStack.pop() << std::endl;
+    std::cout << "POPPED ELEMENT: " << myStack.pop() << std::endl;
+
+    std::cout << "STACK SIZE: " << myStack.size() << std::endl;
+
+    return 0;
+} 
